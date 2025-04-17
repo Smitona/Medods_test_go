@@ -6,9 +6,11 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func routers() {
+func AuthRouters() *mux.Router {
 	router := mux.NewRouter()
-	router.HandleFunc("/auth/token", generateTokenHandler).Name("token")
-	router.HandleFunc("/auth/refresh", refreshTokenHandler).Name("refresh")
+	router.HandleFunc("/auth/token", generateTokenHandler).Name("token").Methods("POST")
+	router.HandleFunc("/auth/refresh", refreshTokenHandler).Name("refresh").Methods("POST")
 	http.Handle("/", router)
+
+	return router
 }
