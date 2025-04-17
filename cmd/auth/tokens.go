@@ -26,12 +26,12 @@ func generateAccessToken(GUID string, IPAddress string) (string, error) {
 
 func generateRefreshToken() (string, error) {
 	// Generating Refresh Token (random bytes, base64 encoded)
-	b := make([]byte, 32)
-	_, err := rand.Read(b)
+	str := make([]byte, 32)
+	_, err := rand.Read(str)
 
 	if err != nil {
 		return "", err
 	}
 
-	return base64.StdEncoding.EncodeToString(b), nil
+	return base64.StdEncoding.EncodeToString(str), nil
 }
