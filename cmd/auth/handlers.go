@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 )
 
 func generateTokenPairHandler(w http.ResponseWriter, r *http.Request) {
@@ -10,10 +11,12 @@ func generateTokenPairHandler(w http.ResponseWriter, r *http.Request) {
 
 	var input struct {
 		GUID      string `json:"guid"`
-		IPAddress string `json:"ip_address"`
+		IPAddress string `json:"pt_address"`
 	}
 
-	accessToken, err := generateAccessToken(input.GUID, input.IPAddress)
+	IPAddress := strings.Split(r.RemoteAddr, ":")[0]
+
+	accessToken, err := generateAccessToken(input.GUID, IPAddress)
 	if err != nil {
 		http.Error(w, "Failed to generate access token", http.StatusInternalServerError)
 		return
@@ -35,6 +38,8 @@ func generateTokenPairHandler(w http.ResponseWriter, r *http.Request) {
 
 func refreshTokenHandler(w http.ResponseWriter, r *http.Request) {
 	// refresh token logic here
+
+	refreshToken := "str"
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]string{
 		"refresh_token": refreshToken,
