@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 	"strings"
+	"gorm.io/gorm"
+    "gorm.io/driver/postgres"
 )
 
 func generateTokenPairHandler(w http.ResponseWriter, r *http.Request) {
@@ -11,7 +13,7 @@ func generateTokenPairHandler(w http.ResponseWriter, r *http.Request) {
 
 	var input struct {
 		GUID      string `json:"guid"`
-		IPAddress string `json:"pt_address"`
+		IPAddress string `json:"ip_address"`
 	}
 
 	IPAddress := strings.Split(r.RemoteAddr, ":")[0]
