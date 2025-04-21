@@ -11,8 +11,7 @@ import (
 	"github.com/Smitona/Medods_test_go/internal/models"
 )
 
-func main() {
-
+func ConnectToDB() *gorm.DB {
 	// connect to db
 	dsn := "host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
@@ -26,6 +25,13 @@ func main() {
 		log.Fatalf("Failed to migrate database: %v", err)
 	}
 
+	return db
+}
+
+func main() {
+
+	ConnectToDB()
+	
 	// init routers
 	router := AuthRouters()
 
